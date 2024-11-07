@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Compras</title>
+</head>
+<body>
+  <div class="shopping-list-container">
+    <h1>Lista de Compras</h1>
+    
+    <div class="add-item-section">
+      <input
+        type="text"
+        placeholder="Adicionar item"
+        [(ngModel)]="newItemName"
+        (keyup.enter)="addItem()"
+      />
+      <button (click)="addItem()">Adicionar</button>
+    </div>
+
+ 
+    <h2>Itens a Comprar</h2>
+    <ul>
+      <li *ngFor="let item of unboughtItems">
+        <input
+          type="checkbox"
+          (change)="toggleBoughtStatus(item.id)"
+        />
+        <span [ngClass]="{ bought: item.bought }">{{ item.name }}</span>
+
+        <div class="actions">
+          <button *ngIf="editItemId !== item.id" (click)="startEditing(item)">
+            Editar
+          </button>
+          <button *ngIf="editItemId === item.id" (click)="saveEdit()">
+            Salvar
+          </button>
+
+          <button (click)="deleteItem(item.id)">Excluir</button>
+        </div>
+
+        <input
+          *ngIf="editItemId === item.id"
+          type="text"
+          [(ngModel)]="editItemName"
+          (keyup.enter)="saveEdit()"
+        />
+      </li>
+    </ul>
+
+    <h2>Itens Comprados</h2>
+    <ul>
+      <li *ngFor="let item of boughtItems">
+        <input
+          type="checkbox"
+          checked
+          (change)="toggleBoughtStatus(item.id)"
+        />
+        <span [ngClass]="{ bought: item.bought }">{{ item.name }}</span>
+        <button (click)="deleteItem(item.id)">Excluir</button>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
