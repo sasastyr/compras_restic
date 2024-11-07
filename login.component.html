@@ -1,0 +1,9 @@
+<div>
+    <h2>Login</h2>
+    <form (ngSubmit)="login()">
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Usuário" required />
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <button (click)="loginWithGoogle()">Entrar com Google</button>
+  </div>
