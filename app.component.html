@@ -1,0 +1,45 @@
+<div class="app-container">
+    <!-- Navbar -->
+    <nav>
+      <ul>
+        <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li><a routerLink="/shopping-list" routerLinkActive="active">Lista de Compras</a></li>
+      </ul>
+    </nav>
+  
+    <router-outlet></router-outlet>
+
+    <div *ngIf="isLoginPage" class="login-page">
+      <h2>Login</h2>
+      <form (ngSubmit)="onSubmit()">
+        <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+        <input type="password" placeholder="Senha" [(ngModel)]="password" name="password" required />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  
+    <!-- Lista de Compras -->
+    <div *ngIf="isShoppingPage" class="shopping-page">
+      <h2>Lista de Compras</h2>
+      <div *ngIf="shoppingList.length === 0">Nenhum item na lista.</div>
+      
+      <ul>
+        <li *ngFor="let item of shoppingList" [ngClass]="{'item-completed': item.completed}">
+          <span>{{ item.name }}</span>
+          <button class="delete-item" (click)="deleteItem(item.id)">Excluir</button>
+          <button *ngIf="!item.completed" (click)="markAsCompleted(item.id)">Marcar como comprado</button>
+        </li>
+      </ul>
+  
+      <div class="add-item">
+        <input [(ngModel)]="newItemName" placeholder="Adicionar novo item" />
+        <button (click)="addItem()">Adicionar</button>
+      </div>
+    </div>
+  
+    <!-- Mensagens de Erro -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  
